@@ -1,7 +1,7 @@
 #include<iostream>
 #include<time.h>
 using namespace std;
-
+/*
 int getNumber(){
     int n = 721;
     return n;
@@ -28,7 +28,7 @@ void printArray(int a[], int size){
  *       a[3]
  *  a[4]
  */
-
+/*
 int recurFact(int n) {
     if (n == 1) {                       // Base case
         return 1;
@@ -139,11 +139,6 @@ int main() {
     print(grades, score);   // Combining the two arraysK
 
 
-
-
-
-
-
     return 0;
 }
-
+*/
