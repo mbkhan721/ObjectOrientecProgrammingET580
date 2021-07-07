@@ -38,9 +38,9 @@ int main() {
     RatNum r1;                              // RatNum r1; || RatNum r1{}; with braces is same thing.
                                             // RatNum r1 creates an object r1 of type RatNum.
                                             // We then call two member functions.
-    r1.setNum(5);                           // Our rational number is populated with two values.
+    r1.setNum(5);                        // Our rational number is populated with two values.
     r1.setDen(7);
-    output(r1);                             // There's no calling object for the non-member function
+    output(r1);                          // There's no calling object for the non-member function
                                             // Instead, we send the object by parameter
 
  return 0;
