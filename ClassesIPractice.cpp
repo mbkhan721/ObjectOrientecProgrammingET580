@@ -53,7 +53,7 @@ int main() {
 
 class RatNum {
 public:
-    void setNum(int n);                     // Only declarations
+    void setNum(int n);                         // Only declarations
     void setDen(int d);
     int getNum();
     int getDen();
@@ -135,7 +135,7 @@ int main() {
     cout << endl;
     return 0;
 }
-*/
+
 
 // --------------------------------------------------------------------------
 // 4. Modify the Rational Number class.
@@ -203,3 +203,4 @@ int main() {
     cout << endl;
     return 0;
 }
+*/
