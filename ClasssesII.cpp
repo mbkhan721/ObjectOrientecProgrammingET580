@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 /*
-// 1.
+// 1. DEFAULT CONSTRUCTORS
 class Course {                              // With default constructor
 public:
     int number;
@@ -18,7 +18,7 @@ public:
 };
 // ----------------------------------------------------------------------------------------
 
-// 2.
+// 2. AUTOMATIC DEFAULT CONSTRUCTORS
 class Course2 {                             // With no constructor
 public:
     int number;
@@ -31,7 +31,7 @@ public:
 };
 // ----------------------------------------------------------------------------------------
 
-// 3.
+// 3. MULTIPLE CONSTRUCTORS
 // It's possible to have more than one constructor(s) with different numbers of parameters
 
 class Course3 {
@@ -59,7 +59,7 @@ public:
 };
 // ----------------------------------------------------------------------------------------
 
-// 4.
+// 4. MEMBER INITIALIZATION
 class Course4 {
 public:
     int number = 5;                             // This is MEMBER INITIALIZATION - default data member
@@ -77,7 +77,7 @@ public:
 };
 // ----------------------------------------------------------------------------------------
 
-// 5.
+// 5. NO DEFAULT CONSTRUCTORS
 class Course5 {
 public:
     int number;
@@ -170,7 +170,7 @@ public:
     // The calling object is set to const within the function.
 };
 // ----------------------------------------------------------------------------------------
-*/
+
 // 9. STATIC DATA MEMBERS
 class Course9 {
 private:
@@ -198,6 +198,36 @@ public:
 };
 
 int Course9::numCourses = 0;
+
+// ----------------------------------------------------------------------------------------
+
+// 10. INLINE FUNCTIONS
+// Compiler replaces the function call with actual function code.
+inline void output(int a[], int size) {
+    for (int i = 0; i < size; i++) {
+        cout << a[i] << " ";
+    }
+}
+// ----------------------------------------------------------------------------------------
+*/
+//  11. INLINE CLASS FUNCTION
+class Course10 {
+private:
+    int number;
+    string professor;
+public:
+    // member functions defined INSIDE of the class are automatically INLINE
+    Course10(): number(0), professor("Staff") {}            // Inline (defined internally)
+    int getNumber() const {return number;}                     // Inline (defined internally)
+
+    // Member functions defined OUTSIDE of the class are OUT-OF-LINE
+    string getProfessor() const;                               // Out of line (defined externally)
+};
+
+// Externally defined out-of-line function call.
+string Course10::getProfessor() const {
+    return professor;
+}
 
 // ----------------------------------------------------------------------------------------
 
@@ -314,8 +344,8 @@ int main() {
     cout << c8.getProfessor() << "\n\n";
 
     // ----------------------------------------------------------------------------------------
-    */
-    cout << "9a)\n";
+
+    cout << "9a) STATIC DATA MEMBERS:\n";
     Course9 c9{};
     cout << c9.getNumber() << "\n";
     cout << c9.getProfessor() << "\n\n";
@@ -339,7 +369,24 @@ int main() {
     // getNumber() has to relate to a specific object. It can't relate to a class because the class
     // itself does not have a number, only object of the class have numbers, but the class itself doesn't.
 
+    // ----------------------------------------------------------------------------------------
 
+    cout << "Inline Function\n";
+    const int SIZE = 5;
+    int a[SIZE] = {1, 2, 3, 4, 5};
+    // output function code is placed here by compiler instead of a function.
+    output(a, SIZE);
+
+    // ----------------------------------------------------------------------------------------
+    */
+    cout << "10) Inline class function:\n";
+    Course10 c10{};
+    cout << c10.getNumber() << "\n";                        // When this function is called, It will
+                                                            // move the code here from the function
+                                                            // and process it here.
+
+    cout << c10.getProfessor() << "\n\n";                   // When this function is called, It will
+                                                            // be converted to machine language.
 
     cout << endl;
     return 0;
