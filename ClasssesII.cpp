@@ -209,7 +209,7 @@ inline void output(int a[], int size) {
     }
 }
 // ----------------------------------------------------------------------------------------
-*/
+
 //  11. INLINE CLASS FUNCTION
 class Course10 {
 private:
@@ -228,11 +228,11 @@ public:
 string Course10::getProfessor() const {
     return professor;
 }
-
+*/
 // ----------------------------------------------------------------------------------------
-
+/*
 int main() {
-    /*
+
     cout << "\n1)\n";
     // class Course with default constructor
     Course c1{};                                // Call the default constructor
@@ -378,7 +378,7 @@ int main() {
     output(a, SIZE);
 
     // ----------------------------------------------------------------------------------------
-    */
+
     cout << "10) Inline class function:\n";
     Course10 c10{};
     cout << c10.getNumber() << "\n";                        // When this function is called, It will
@@ -391,7 +391,5 @@ int main() {
     cout << endl;
     return 0;
 }
-
-
-
+*/
 
