@@ -123,7 +123,7 @@ public:
     }
 };
 // ----------------------------------------------------------------------------------------
-*/
+
 // 7. EXTERNALLY DEFINING CONSTRUCTORS
 class Course7 {
 public:
@@ -144,6 +144,61 @@ Course7::Course7(int n): Course7(n, "Staff") {                       // one-para
 Course7::Course7(int n, string p): number(n), professor(p) {            // Two-parameter constructor
     cout << "Two-parameter constructor\n";
 }
+// ----------------------------------------------------------------------------------------
+
+// 8. CONST MEMBER FUNCTION
+class Course8 {
+private:
+    int number;
+    string professor;
+public:
+    Course8(): number(0), professor("Staff") {}             // Default constructor with initialization
+
+    // Const member function
+    // Calling objects is made const within the function and cannot be edited.
+    // The calling of this object is made constant, it cannot be modified.
+    int getNumber() const {return number;}                    // Accessor function
+    string getProfessor() const {return professor;}           // Accessor function
+
+    // Compiler Error - illegal const member function, attempts to modify the calling object.
+    //void badFunction() const {number = 580;}
+
+    // Const member function syntax:
+    // returnType functionName() const {}
+
+    // Purpose:
+    // The calling object is set to const within the function.
+};
+// ----------------------------------------------------------------------------------------
+*/
+// 9. STATIC DATA MEMBERS
+class Course9 {
+private:
+    int number;
+    string professor;
+
+    // Static data members belong to the class itself, not to class objects
+    static int numCourses;                      // The number of instantiated Course9 objects.
+                                                // It keeps track of the total number of courses
+                                                // that's been created for our class.
+    static const int maxStudents = 30;          // Const maximum number of students per course.
+
+public:
+    // Constructors increment numCourses whenever a new Course object is created.
+    Course9(): Course9(0, "Staff") {}           // Default constructor calls two-parameter constructor
+    Course9(int n, string p): number(n), professor(p) {++numCourses;}
+
+    // Object accessors return object data
+    int getNumber() const {return number;}
+    string getProfessor() const {return professor;}
+
+    // Class accessors return static class data
+    static int getNumCourses() {return numCourses;}
+    static int getMaxStudents() {return maxStudents;}
+};
+
+int Course9::numCourses = 0;
+
 // ----------------------------------------------------------------------------------------
 
 int main() {
@@ -235,7 +290,7 @@ int main() {
     cout << c6c.professor << "\n\n";
 
     // ----------------------------------------------------------------------------------------
-    */
+
     cout << "7a)\n";
     Course7 c7a{};                                    // Calling the default constructor
     cout << c7a.number << "\n";
@@ -251,11 +306,45 @@ int main() {
     cout << c7c.number << "\n";
     cout << c7c.professor << "\n\n";
 
+    // ----------------------------------------------------------------------------------------
 
+    cout << "8)\n";
+    Course8 c8{};
+    cout << c8.getNumber() << "\n";             // This function getNumber() cannot modify this object (c8)
+    cout << c8.getProfessor() << "\n\n";
+
+    // ----------------------------------------------------------------------------------------
+    */
+    cout << "9a)\n";
+    Course9 c9{};
+    cout << c9.getNumber() << "\n";
+    cout << c9.getProfessor() << "\n\n";
+
+    cout << "9b)\n";
+    Course9 c9b{580, "Dr. Smith"};
+    cout << c9b.getNumber() << "\n";
+    cout << c9b.getProfessor() << "\n\n";
+
+    // Im telling the compiler that getNumCourses() function is a static member of Course9.
+    // I dont need to c9.getNumCourses() coz I can access it directly from the class.
+    cout << Course9::getNumCourses() << " courses\n";
+
+    // I can call a static function from an object.
+    // I can also access static functions from an instance of a class.
+    cout << c9.getMaxStudents() << ", max num of students per course.\n\n";
+
+    // cout << Course9::getNumber() << "\n";
+    // cout above is illegal, cannot call an instance function from the class.
+    // Because I'm accessing a getNumber() function from Course9 class which is an instance function.
+    // getNumber() has to relate to a specific object. It can't relate to a class because the class
+    // itself does not have a number, only object of the class have numbers, but the class itself doesn't.
 
 
 
     cout << endl;
     return 0;
 }
+
+
+
 
