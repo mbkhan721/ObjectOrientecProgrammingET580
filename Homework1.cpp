@@ -1,5 +1,6 @@
 #include<iostream>
 #include<string>
+#include<iomanip>
 using namespace std;
 //
 // Created by Muhammad B. Khan on 7/9/2021.
@@ -65,16 +66,129 @@ void output(Student students[], int size) {
 }
 
 // 3) --------------------------------------------------------------------------
-void print(int* b, int size) {
-    for (int i =0;i<size;i++) {
-        cout << b[i] << " ";
+void print(int* q, int size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (q[i] == j) {
+                cout << "Q  ";
+            }
+            else {
+                cout << ".  ";
+            }
+        }
+        cout << "\n";
     }
+    cout << "\n";
 };
 
+bool queensAreSafe(int* q, int size) {
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (q[i] == q[j]) {                     // If multiple queens share a column
+                return false;
+            }
+            if (abs(i - j) == abs(q[i] - q[j])) {   // If multiple queens share a diagonal
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
+// 4) --------------------------------------------------------------------------
+class Vehicle {
+private:
+    string brand;
+    int number_of_doors;
+public:
+    // Default constructor
+    Vehicle(): brand("TBD"), number_of_doors(0) {}
+    // Two param constructor
+    Vehicle(string make, int doors): brand(make), number_of_doors(doors) {}
 
+    // Accessor functions
+    string getBrand() {return brand;}
+    int getNumOfDoors() {return number_of_doors;}
 
+    // Mutators
+    void setBrand(string make) {brand = make;}
+    void setNumOfDoors(int doors) {number_of_doors = doors;}
 
+    // Print member function
+    void display() {
+        cout << "Brand: " << brand << "\n";
+        cout << "Number of Doors: " << number_of_doors << "\n";
+    }
+
+};
+
+// 5) --------------------------------------------------------------------------
+class Student2 {
+private:
+
+    // Inner function
+    class GPA {
+    private:
+        double gpa;
+    public:
+        GPA() {gpa = 0.0;}
+        GPA(double gpa) { this -> gpa = gpa;}
+        void setGpa(double gpa) {this -> gpa = gpa;}
+        double getGpa() {return gpa;}
+
+        char getLetterGrade() {
+            if (gpa >= 3.5) {
+                return 'A';
+            }
+            else if (gpa >= 2.5) {
+                return 'B';
+            }
+            else if (gpa >= 1.5) {
+                return 'C';
+            }
+            else if (gpa >= 1) {
+                return 'D';
+            } else return 'F';
+        }
+
+    };
+    // Outer function
+    string name;
+    string major;
+    GPA grade;
+public:
+    Student2();
+    Student2(string name, string major, double gpa);
+    void setName(string name);
+    void setMajor(string major);
+    void setGrade(double gpa);
+    string getName();
+    string getMajor();
+    double getGrade();
+    void display();
+
+};
+Student2::Student2(string name, string major, double gpa) {
+    this -> name = name;
+    this -> major = major;
+    grade.setGpa(gpa);
+}
+void Student2::setName(string name) {name = name;}
+void Student2::setMajor(string major) {major = major;}
+void Student2::setGrade(double gpa) {grade.setGpa(gpa);}
+string Student2::getName() {return name;}
+string Student2::getMajor() {return major;}
+double Student2::getGrade() {return grade.getGpa();}
+void Student2::display() {
+    cout << "Name: " << name << "\n";
+    cout << "Major: " << major << "\n";
+    cout << "GPA: " << grade.getGpa() << "\n";
+    cout << "Grade: " << grade.getLetterGrade() << "\n\n";
+}
+
+// *********************************************************************************
+// **************************      MAIN FUNCTION    ********************************
+// *********************************************************************************
 int main() {
 
     // 1) --------------------------------------------------------------------------
@@ -107,12 +221,41 @@ int main() {
 
     // 3) --------------------------------------------------------------------------
     cout << "------------ Problem 3: \n";
+    // Array index represents rows
+    // Array value represents columns
 
     int Queen[8];
     cout << "Enter 8 column values: ";
-    cin >> Queen[7]; // Problem here
+    for (int i = 0; i < 8; i++) {
+        cin >> Queen[i];
+    }
+
+    cout << "\n";
     print(Queen, 8);
 
+    if (queensAreSafe(Queen, 8)) {
+        cout << "Queens are safe.";
+    } else
+        cout << "Queens are not safe.";
+
+
+    // 4) --------------------------------------------------------------------------
+    cout << "\n\n------------ Problem 4: \n";
+
+    Vehicle x, y("BMW", 4);
+    x.display();
+    y.display();
+
+
+    // 5) --------------------------------------------------------------------------
+    cout << "\n\n------------ Problem 5: \n";
+    cout.setf(ios::fixed);
+    cout.precision(2);
+
+    Student2 s1("John Williams", "Music", 4.0);
+    Student2 s2("Isaac Asimov", "English", 2.53);
+    s1.display();
+    s2.display();
 
 
     cout << endl;
