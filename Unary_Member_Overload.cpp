@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-
+/*
 // --------------------------------------- Unary Member Overload
 // Operator with one operand.
 
@@ -38,3 +38,4 @@ int main() {
     (-a).output();  // negating because we have one operand and a negation symbol.
     a.output();
 }
+ */
