@@ -1,7 +1,6 @@
 #include<iostream>
 using namespace std;
 
-
 int main() {
 
     int d = 5;
@@ -55,9 +54,9 @@ int main() {
     cout << z << "\n";      // Prints 20
     cout << *y << "\n\n";   // Prints 20
 
-    double *m, n;           // declare a double pointer m and a double n
-    double h, *i;           // declare a double h and a double pointer i
-    double *j, *k;          // declare two double pointer j and k
+    //double *m, n;           // declare a double pointer m and a double n
+    //double h, *i;           // declare a double h and a double pointer i
+    //double *j, *k;          // declare two double pointer j and k
 
 
     // -------------------------------------------------------- Pointer Equivalence
@@ -84,9 +83,47 @@ int main() {
     cout << &s << "\n\n";   // Prints a different memory address
 
     cout << r << "\n";      // Prints the memory address of q
-    cout << s << "\n";      // Prints the memory address of q
+    cout << s << "\n\n";      // Prints the memory address of q
+
+    double t = 3.14;
+    s = &t;
+    // The following condition is still true because s still points to 3.14 even though
+    if (*r == *s) {
+        cout << "r & s point to variables with the same value.\n\n";
+    }
 
 
+    // -------------------------------------------------------- Pointer and Constants
+    cout << "---------------------- Pointer and Constants:\n";
+
+    // const pointer: the pointer cannot be modified
+    // pointer to a const variable: the variable pointed to cannot be modified
+    // const pointer to a const variable: both variables cannot be modified
+    int u = 5;
+    const int v = 5;
+
+    // Const pointer
+    int *const w = &u;          // w cannot be modified, it will always point to variable u
+                                // *w can be modified.
+                                // variable pointed to by w can be modified.
+    *w = 20;                    // value of u is now 20
+    cout << u << "\n";
+    // w = &x;                  // compiler error: w cannot be modified
+
+
+    // Pointer to a constant variable
+    const int *m = &v;          // the variable pointed to cannot be modified
+    // m = &u;                  // m can point to a non-const or a const
+    // *m = 10;                 // compiler error: but the value of *m cannot be modified
+                                // because it's constant
+
+
+    // const pointer to a const variable
+    const int *const n = &v;    // both variables cannot be modified. The pointer cannot be modified nor
+                                // can the pointer be used to modify u.
+
+    // n = &u;                  // compiler error: n cannot be modified
+    // *n = 25;                 // compiler error: *n cannot be modified
 
 
 
