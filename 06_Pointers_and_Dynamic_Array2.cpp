@@ -1,3 +1,4 @@
+/*
 #include<iostream>
 using namespace std;
 
@@ -99,6 +100,25 @@ int main() {
     // -------------------------------------------------------- Memory Leak
     cout << "\n---------------------- Memory Leak:\n";
 
+    int *a = new int(5);
+    a = new int(10);            // Memory leak
+                                // int 5 memory in the heap is not accessible
+                                // First heap memory will not be recycled within the program lifetime
+                                // If enough leaks occur, program may crash.
+
+    // Possible methods of avoiding memory leaks
+    // Delete the first dynamic variable before creating a new one
+    int *b = new int(1);
+    delete b;
+    b = new int(2);
+
+    // Or
+    // create another pointer to store the location of the first dynamic variable.
+    int *c = new int(1);
+    int *backup = c;
+    c = new int(2);
+
+    // This way all memory is recycled when the program ends.
 
 
 
@@ -106,12 +126,4 @@ int main() {
     return 0;
 }
 
-
-
-
-
-
-
-
-
-
+*/
