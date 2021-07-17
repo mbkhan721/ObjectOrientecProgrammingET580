@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -10,8 +10,8 @@ using namespace std;
 // But it works in a similar way. If it was PASS BY REFERENCE, we can directly
 // access array c in this function.
 
-void testPassByArray(int c[]) {
-// void testPassByPointer(int *c) {                      // This is also acceptable due to type decay
+//void testPassByArray(int c[]) {
+void testPassByPointer(int *c) {                         // This is also acceptable due to type decay
     cout << "Size of c: " << sizeof(c) << "\n";          // Size of an array param will give you the size of a pointer
     cout << "Value of c: " << c << "\n";                 // Prints memory of the first element
 }
@@ -30,15 +30,58 @@ void print(int *p, int size) {
     }
 }
 
+// 6.
+// -------------------------------------------------------- Return a Local Dynamic Array
+
+// Return a pointer to the dynamic array
+int* returnAnArray(int size) {
+    int *a = new int[size];                             // Array is in the heap
+    for (int i = 0; i < size; ++i) {
+        a[i] = i;
+    }
+    return a;
+}
+void printRAA(int *p, int size) {
+    for (int i = 0; i < size; ++i) {
+        cout << p[i] << " ";                            // Print value
+    }
+}
+
+// 7.
+// -------------------------------------------------------- Return a Local Static Array
+int* returnStaticArr(int size) {
+    int b[5] = {1,2,3,4,5};                             // Array on the stack - only difference from #6
+    for (int i = 0; i < size; ++i) {
+        b[i] = i;
+    }
+    return b;                                           // array is recycled
+}                                                       // When this function ends, all the memory on the stack
+                                                        // disappears with it.
+                                                        // Name b as well as data disappears.
+
+// When I return memory address of the array and try to store it into pointer *i, I end up with a dangling pointer.
+// because there is nothing to point to, the array is gone.
+// DYNAMIC MEMORY allows us to write a function like this,
+// STACK MEMORY does NOT because everything is created locally.
 
 
-
+// 8b.
+// -------------------------------------------------------- Dynamic Array Of Arrays: Printout
+void printARR(int **arr, int arrays, int integers) {
+    for (int i = 0; i < arrays; ++i) {
+        for (int j = 0; j < integers; ++j) {
+            cout << &arr[i][j] << " ";                  // Prints two separate blocks of memory (NOT contiguous)
+        }
+        cout << "\n";
+    }
+}
+*/
 
 // *********************************************************************************
 // **************************      MAIN FUNCTION     *******************************
 // *********************************************************************************
 
-
+/*
 int main() {
 
     // 1.
@@ -97,7 +140,7 @@ int main() {
     // WE CAN CONFIRM IT BY CHECKING THE SIZEOF(ARRAY) AND IT WILL PRINT 4.
 
     int c[5] = {7, 21, 4, 26, 34};
-    testPassByArray(c);
+    testPassByPointer(c);
 
 
     // 4.
@@ -166,8 +209,168 @@ int main() {
     // -------------------------------------------------------- Return a Local Dynamic Array
     cout << "\n6. ---------------------- Return a Local Dynamic Array:\n";
 
+    int size = 10;
+    // h points to the returned heap array
+    int *h = returnAnArray(size);
+    cout << "Printing h: ";
+    printRAA(h, size);
+    cout << endl;
+    delete [] h;
+
+    // The value of pointer a from the function is store into h so array remains accessible.
 
 
+    // 7.
+    // -------------------------------------------------------- Return a Local Static Array
+    cout << "\n7. ---------------------- Return a Local Static Array:\n";
+
+    int size = 5;
+    //int *i = returnStaticArr(size);                   // ERROR: This is a static array created on the stack
+    //printRAA(i, size);                                // Local array won't return anything
+
+    // KEY DIFFERENCE BETWEEN STATIC AND DYNAMIC ARRAY:
+    //
+    // Static Array:
+    // Size must be known at compile time (before program runs EX: size = 5;)
+    // Size cannot change during run time (while program runs)
+    //
+    // Dynamic Array:
+    // Size can be decided during run time
+    // Size can be modified (grow or shrink) during run time
+
+    // 7b.
+    // -------------------------------------------------------- Request Size for Dynamic Array
+    cout << "\n7b. ---------------------- Request Size for Dynamic Array:\n";
+
+    size = 0;
+    cout << "Enter size: ";
+    cin >> size;
+    cout << "\n";
+
+    int *j = new int[size];
+
+    // Contiguous block of memory
+    for (int i = 0; i < size; ++i) {
+        cout << j[i] << "\t" << &j[i] << "\n";
+    }
+
+    // delete the array
+    delete [] j;
+
+
+    // 8.
+    // -------------------------------------------------------- Dynamic Array Of Arrays: Create
+    cout << "\n8. ---------------------- Dynamic Array Of Arrays:\n";
+
+    int arrays = 2;
+    int integers = 3;
+
+    // Step 1
+    // Create an array of pointers
+    int **arr = new int*[arrays];           // Pointer to a pointer
+
+    // Step 2
+    // Point each pointer to a new array on the heap
+    for (int i = 0; i < arrays; ++i) {
+        arr[i] = new int[integers];
+    }
+
+    // int** is a pointer to an int* pointer or to an int array
+    // A pointer points to a pointer which points to an array of data.
+    // arr points to arrays. arrays point to integers
+
+
+    // 8b.
+    // -------------------------------------------------------- Dynamic Array Of Arrays: Delete
+
+    // Step 1
+    // Delete each integer array
+    for (int i = 0; i < arrays; ++i) {
+        delete [] arr[i];
+    }
+
+    // Step 2
+    // Delete the array of integer pointers
+    delete [] arr;
+
+    // The same two steps but reversed
+
+
+    // 8b.
+    // -------------------------------------------------------- Dynamic Array Of Arrays: Printout
+    cout << "\n8b. ---------------------- Dynamic Array Of Arrays:\n";
+
+    int arrays;
+    int integers;
+    cout << "Enter both dimensions: ";
+    cin >> arrays >> integers;
+    cout << "\n";
+
+    // Create an array of arrays, not a 2d array (not contiguous)
+    // 1) Create the first dimension (array of int pointers)
+    int **arr = new int*[arrays];
+
+    // 2) Create a second dimension (array of integers)
+    for (int i = 0; i < arrays; ++i) {
+        arr[i] = new int[integers];
+    }
+    printARR(arr, arrays, integers);
+
+
+    // 9.
+    // -------------------------------------------------------- Pointer Arithmetic
+    cout << "\n9. ---------------------- Pointer Arithmetic:\n";
+
+    int k[4] = {10, 20, 30, 40};
+    cout << *(k + 2) << "\n";                       // Prints 30
+    cout << *(k + 0) << "\n\n";                     // Prints 10
+    // Take the pointer and add or subtract specified elements, and
+    // dereference that location to get the data at that location.
+
+    cout << k + 2 << "\n";                       // Prints memory address of 30
+    cout << k + 0 << "\n\n";                     // Prints memory address of 10
+
+    // Be careful using the address of operator with array variables
+    cout << &k << "\n";                       // Outputs the address of the first element in array
+    cout << &k + 1 << "\n";                   // Outputs the address of the first element AFTER THE ARRAY
+
+
+    // 10.
+    // -------------------------------------------------------- Pointer Arithmetic: ID Array
+    cout << "\n10. ---------------------- Pointer Arithmetic: 1D Array\n";
+
+    int *l = new int[5] {1,2,3,4,5};
+
+    for (int i = 0; i < 5; ++i) {
+        cout << l[i] << " ";
+    }
+    cout << "\n";
+
+    // Print value with pointer arithmetic
+    for (int i = 0; i < 5; ++i) {
+        cout << *(l + i) << " ";
+    }
+    cout << "\n";
+
+    // Print memory with pointer arithmetic
+    for (int i = 0; i < 5; ++i) {
+        cout << l + i << " ";
+    }
+    cout << "\n";
+
+    // Delete the array
+    delete [] l;
+
+
+    // 11.
+    // -------------------------------------------------------- Pointer Arithmetic: Array of Arrays
+    cout << "\n11. ---------------------- Pointer Arithmetic: Array of Arrays\n";
+
+    // cout << a[0][1];                     // Print first array second value
+    // cout << *(*(a+0)+1);                 // Print first array second value
+
+    // cout << a[1][3];                     // Print second array third value
+    // cout << *(*(a+1)+3);                 // Print second array third value
 
 
 
@@ -175,20 +378,7 @@ int main() {
     cout << "\n";
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
