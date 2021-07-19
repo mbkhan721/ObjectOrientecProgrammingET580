@@ -12,6 +12,16 @@ public:
     bool operator ==(const Course& c) const {return number == c.number;}
 };
 
+// 3.
+// -------------------------------------------------------- Arrow Operator
+class Course2 {
+public:
+    int number;                                                 // Data member
+    Course2(): Course2(0) {}                                 // Default constructor
+    Course2(int n): number(n) {}                                // Constructor with one parameter
+    int getNumber() const {return number;}                      // Accessor function
+};
+
 
 
 
@@ -38,11 +48,12 @@ int main() {
     cout << (c1 == c2) << "\n";                                    // Check if equivalent object
     //
     // Test if same object (check memory addresses)
-    cout << (&c1 == &c2) << "\n\n";                                // Compare memory addresses
+    cout << (&c1 == &c2) << "\n";                                  // Compare memory addresses
 
 
     // 2.
     // -------------------------------------------------------- Equivalence: Dynamic Variables
+    cout << "\n2. ---------------------- Equivalence: Dynamic Variables:\n";
 
     Course *c3 = new Course{575};                                // with pointer *c1, we use the "new" operator to
                                                                     // create a dynamic memory.
@@ -67,7 +78,38 @@ int main() {
 
 
     // 3.
-    // -------------------------------------------------------- Equivalence: Dynamic Variables
+    // -------------------------------------------------------- Arrow Operator
+    cout << "\n3. ---------------------- Arrow Operator:\n";
+
+    Course2 *c = new Course2{};                                    // Construct a new Course object with value 580.
+                                                                   // Point to it a Course object pointer *c.
+
+                                                                   // I want to access data member "number". It's public
+                                                                   // so we can do so.
+
+                                                                   // 580 is a dynamic variable, in order for me to access
+                                                                   // it, I MUST GO THROUGH THE POINTER.
+    // dereference c to access number
+    cout << (*c).number << "\n";
+
+    // alternative syntax
+    cout << c -> number << "\n\n";                                  // The arrow operator combines the two operations
+                                                                    // above. The arrow operator means dereference the
+                                                                    // pointer c and then access the data member number
+                                                                    // inside the course object.
+
+    (*c).number = 580;                                              // Deref pointer to access object data
+    cout << (*c).getNumber() << "\n";                               // Deref pointer to access object functions
+
+    c ->number = 585;                                               // Deref pointer to access object data
+    cout << c -> getNumber() << "\n";                               // Deref pointer to access object functions
+
+    // The arrow operation is two operations: Dereference and dot. operations.
+
+
+    // 4.
+    // -------------------------------------------------------- This Pointer
+    cout << "\n4. ---------------------- This Pointer:\n";
 
 
 
