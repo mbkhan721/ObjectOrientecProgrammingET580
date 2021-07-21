@@ -18,7 +18,7 @@ public:
 class Course2 {
 public:
     int number;                                                 // Data member
-    Course2(): Course2(0) {}                                 // Default constructor
+    Course2(): Course2(0) {}                                  // Default constructor
     Course2(int n): number(n) {}                                // Constructor with one parameter
     int getNumber() const {return number;}                      // Accessor function
 };
@@ -29,7 +29,7 @@ class Course3 {
 private:
     int number;                                                 // Private Data member
 public:
-    Course3(): Course3(0) {}                                 // Default constructor
+    Course3(): Course3(0) {}                                  // Default constructor
     Course3(int n): number(n) {}                                // Constructor with one parameter
 
     bool operator == (const Course3& c) {return this -> number == c.number;}
@@ -48,11 +48,49 @@ public:
 ostream& operator << (ostream& out, const Course3 &c) {return (out << c.number);}
 
 
+// 5.
+// -------------------------------------------------------- Shallow Copy
+class Course4 {
+private:
+    int *number;                                // Dynamic Data member
+                                                // It points to dynamic memory created in the
+                                                // constructor.
+public:
+    Course4(): Course4(0) {}
+    Course4(int n): number(new int(n)) {}       // Initialize dynamic memory
+    void shallowCopy(const Course4 &c);
+};
 
+// Shallow copy copies pointers from one object to another object, objects share data
+void Course4::shallowCopy(const Course4 &c) {
+    //
+    // We print the memory addresses of the dynamic variables stored in C8 and C9.
+    // And we print the values of the dynamic variables stored in c8 and c9.
+                                                // number is a pointer so it prints memory address
+                                                // of the variable THAT THESE POINTERS POINT TO.
+    cout << number << "\n";                     // Prints memory address of number variable in c8.
+    cout << c.number << "\n";                   // Prints memory address of number variable in c9.
 
+    cout << *number << "\n";                    // I'm de-referencing the pointer and accessing the
+    cout << *(c.number) << "\n\n";              // dynamic memory. Prints 580, 575
 
+    // *c.number can be read as de-referencing c only. c.number gives me the value of number inside
+    // the course object which is a memory address. The I de-reference that memory address to get
+    // the actual data.
 
+    // Shallow Copy
+    number = c.number;                          // copy pointer values (memory address of data)
+    //  c8 = c9
+    // Copies the memory address of number in c9 into the pointer variable from c8.
 
+    cout << number << "\n";                     // Prints memory address of number variable in c9.
+    cout << c.number << "\n";                   // Prints memory address of number variable in c9.
+    cout << *number << "\n";                    // I'm de-referencing the pointer and accessing the
+    cout << *(c.number) << "\n";                // dynamic memory. Both prints 575, 575
+}
+// The problem is that both variables are now sharing the same dynamic location. Originally, we had
+// an independent memory, now we also lost access to memory of c8 because of line 82. And now we
+// have a memory leak in addition to c8 and c9 sharing the same memory on the heap.
 
 
 // *********************************************************************************
@@ -149,13 +187,13 @@ int main() {
 
 
     // 5.
-    // -------------------------------------------------------- Dynamic Data Members
-    cout << "\n5. ---------------------- Dynamic Data Members:\n";
+    // -------------------------------------------------------- Shallow Copy
+    cout << "\n5. ---------------------- Shallow Copy:\n";
 
+    Course4 c8{580};                    // Two automatic variables c8 & c9.
+    Course4 c9{575};                    // Both contains pointer which points to dynamic memory.
 
-
-
-
+    c8.shallowCopy(c9);                     // call shallowCopy by c8 and send c9 as a param.
 
 
     cout << "\n";
