@@ -22,6 +22,30 @@ public:
     int getNumber() const {return number;}                      // Accessor function
 };
 
+// 4.
+// -------------------------------------------------------- This Pointer
+class Course3 {
+private:
+    int number;                                                 // Private Data member
+public:
+    Course3(): Course3(0) {}                                 // Default constructor
+    Course3(int n): number(n) {}                                // Constructor with one parameter
+
+    bool operator == (const Course3& c) {return this -> number == c.number;}
+    friend ostream& operator << (ostream& out, const Course3 &c);
+
+    void thisPrint() const {
+        cout << this << "\n";                                   // Print the pointer to the calling object
+        cout << *this << "\n\n";                                // Print the calling object (requires << overloading)
+    }
+    void thisCompare(Course3 &c) {
+        if (this == &c ) {cout << "Same object \n";}            // Compare memory addresses
+        if (*this == c ) {cout << "Equivalent object \n\n";}    // Comparing objects (requires == overload)
+    }
+};
+
+ostream& operator << (ostream& out, const Course3 &c) {return (out << c.number);}
+
 
 
 
@@ -110,6 +134,22 @@ int main() {
     // 4.
     // -------------------------------------------------------- This Pointer
     cout << "\n4. ---------------------- This Pointer:\n";
+
+    Course3 c6{575};
+    Course3 c7{575};
+
+    cout << &c6 << "\n";                                            // Print object memory address
+    cout << c6 << "\n";                                             // Print object (requires << overload)
+
+    c6.thisPrint();                                                 // Do the same thing using "this"
+
+    c6.thisCompare(c6);                                         // Compare c6 with itself
+    c6.thisCompare(c7);                                         // Compare c6 with c7
+
+
+    // 5.
+    // -------------------------------------------------------- Dynamic Data Members
+    cout << "\n5. ---------------------- Dynamic Data Members:\n";
 
 
 
