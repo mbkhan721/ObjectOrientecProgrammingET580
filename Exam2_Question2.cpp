@@ -28,7 +28,7 @@ int main() {
     cout << *a + 1 << endl;                 // 7: 0x7ffee2fef9ec
     cout << **a + 1 << endl;                // 8: 2
     cout << &a << endl;                     // 9: 0x7ffee2fef9e0
-    cout << &a + 1 << endl;                 // 10:
+    cout << &a + 1 << endl;                 // 10: 0x7ffee2fef9f10
 
 
     cout << endl;
