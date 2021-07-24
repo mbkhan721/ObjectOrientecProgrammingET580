@@ -1,78 +1,74 @@
 
 #include <iostream>
+#include <time.h>
 using namespace std;
-
-// DYNAMIC ARRAY: accessible by pointer
-// Constructor initialization requires new to allocate memory
-// [] delete used to deallocate memory when object is destroyed
 
 class Course {
 private:
-    int *studentIDs;                        // Pointer to dynamic array
-    int size;                               // Size of the array
+    int *number;                            // dynamic data member
+    string prof;                            // automatic data member
+    int *studentIDs;                        // dynamic array
+    int size;                               // size of the array
 public:
-    Course(int s): size(s), studentIDs(new int[s]) {}       // allocate dynamic memory
-    // Constructor above accepts one variable which is the size of the array.
-    // Size is populated just like any other automatic variable.
-    // studentIDs is the new dynamic array of size s.
-    // We generated dynamic by our constructor which is pointed to by the pointer studentIDs.
-
-
-    // Copy Constructor
-    Course(const Course &c): size(c.size), studentIDs(new int[c.size]) {
-        for (int i = 0; i < c.size; ++i) {
-            studentIDs[i] = c.studentIDs[i];
+    Course(): Course(0, "", 3) {}
+    Course(int n, string p): Course(n, p, 3) {}
+    Course(int n, string p, int s): number(new int(n)), prof(p), size(s), studentIDs(new int[s]) {
+        for (int i = 0; i < size; ++i) {
+            studentIDs[i] = rand() % 90 + 10 + 1;       // Store random values into array studentIDs for demo
         }
     }
-    // The copy constructor starts with a class name and accepts a single param which is an object of type
-    // Course by reference and it's a constant object.
-    // First I copy the size from c to our new object. This is a shallow copy, size = c.size;
-    // studentIDs(new int[c.size]) creates a new array. For the studentIDs pointer, inside the new object,
-    // I create a new array and that array is of c.size.
-    // Now I've allocated dynamic memory pointed to by studentIDs in our new object.
-    // I have empty array of the same size as the array that's in c, so I used a for loop to copy all the
-    // data from the array in object c to the array in our new object.
-    // At the end of this function, we have two objects that are equivalent that both store dynamic array
-    // of equivalent size with equivalent data.
 
-    // This array stores data, it doesn't store pointers. If this array stored pointers like an array or arrays,
-    // then this would have to be a deep copy.
+    friend ostream& operator << (ostream& out, const Course &c);
 
-    // The purpose of the copy constructor is to create a new object from an existing object. In the copy constructor
-    // we have to create a new memory.
-    // The purpose of the assignment overload is to copy from one object that exists to another object that exists. We
-    // are going to update the memory that exists.
-
-
-    // Assignment operator overload
-    Course& operator=(const Course &c) {
-        if (this != &c) {                               // are objects different or same
-            if (size != c.size) {                       // are the arrays of same size
-                delete [] studentIDs;                   // Delete original array
-                size = c.size;                          // Update size
-                studentIDs = new int[c.size];           // Create new array of size
-            }
-            for (int i = 0; i < c.size; ++i) {
-                studentIDs[i] = c.studentIDs[i];        // Copy array from c to the array in the calling object
-            }
-            return *this;                               // Return the modified calling object
-        }
-// At the end of this function, we have an array of the same size.
-    }
-
-
-    // Destructor
-    ~Course() {delete [] studentIDs;}
-
-    void f() {
-        Course c{575};
-    }                                                   // c goes out of scope so the destructor is called
+    Course(const Course &c);                // Copy constructor
+    Course& operator = (const Course &c);   // assignment operator overload
+    ~Course();                              // destructor
 
 };
 
-// studentIds must be deallocated when c is destroyed to prevent a memory leak.
+Course::Course(const Course &c):            // Copy constructor
+number(new int(*(c.number))),               // initialize heap memory
+prof(c.prof),                               // Copy professor
+size(c.size),                               // Copy size
+studentIDs(new int[c.size])                 // Initialize a dynamic array with c.size
+{
+    for (int i = 0; i < c.size; ++i) {      // Copy array contents from c to *this
+        studentIDs[i] = c.studentIDs[i];
+    }
+}
 
+Course& Course::operator=(const Course &c) { // Assignment operator overload
+    if (this != &c) {                       // Only copy if objects are different
+        *number = *(c.number);              // Deep copy the heap data member
+        prof = c.prof;                      // Shallow copy the stack data member
 
+        if (size != c.size) {               // If arrays are different size, delete array
+            delete [] studentIDs;           // delete original array
+            size = c.size;                  // update size
+            studentIDs = new int[c.size];   // create a new array of new size
+        }
+        for (int i = 0; i < size; ++i) {    // Copy the array contents from c to *this
+            studentIDs[i] = c.studentIDs[i];
+        }
+    }
+    return *this;                           // Return the calling object by reference
+}
+
+Course::~Course() {                         // Destructor
+    delete number;                          // safely delete dynamic memory
+    delete [] studentIDs;
+}
+
+ostream& operator << (ostream& out, const Course &c) {
+    out << *(c.number) << " " << c.prof << "\n";
+    out << "Object memory address: " << &c << "\n";
+    out << "Member memory address: " << c.number << "\n";
+    for (int i = 0; i < c.size; ++i) {
+        out << c.studentIDs[i] << " ";
+        out << &(c.studentIDs[i]) << "\n";
+    }
+    return out;
+}
 
 
 // *********************************************************************************
@@ -80,9 +76,25 @@ public:
 // *********************************************************************************
 
 int main() {
+    cout << endl;
+    srand(time(NULL));
 
+    Course c1{580, "Trowbridge"};
+    Course c2{575, "Sun"};
 
+    cout << "C1: " << c1 << "\n\n";
+    cout << "C2: " << c2 << "\n\n";
+
+    // Copy constructor
+    Course c3{c2};                      // New memory is created for c3 using deep copies
+    cout << "C3: " << c3 << "\n\n";     // It will have separate memory addresses
+
+    // Assignment operator overload
+    c1 = c2;
+    cout << "C1: " << c1 << "\n\n";     // The data got replaced but the memory address is unchanged.
 
     cout << "\n";
     return 0;
 }
+// The whole purpose of all these functions and deep copy is to ensure that each object memory is controlled
+// and separate.
