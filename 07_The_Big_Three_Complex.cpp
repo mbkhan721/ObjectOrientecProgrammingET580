@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 #include <time.h>
 using namespace std;
@@ -92,9 +92,11 @@ int main() {
     // Assignment operator overload
     c1 = c2;
     cout << "C1: " << c1 << "\n\n";     // The data got replaced but the memory address is unchanged.
+                                        // The data is copied from c2 to c1 but the memory address of c1 is unchanged.
 
     cout << "\n";
     return 0;
 }
 // The whole purpose of all these functions and deep copy is to ensure that each object memory is controlled
 // and separate.
+*/
