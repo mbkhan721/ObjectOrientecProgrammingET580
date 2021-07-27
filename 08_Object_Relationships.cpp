@@ -22,7 +22,7 @@ private:
     string name;
     Arm left;                   // Type Arm
     Arm right;                  // Type Arm
-public:                         // Both arms are stored by value inside out person object. We can see that in constr below.
+public:                         // Both arms are stored by value inside the person object. We can see that in constr below.
     Person(): Person("Anonymous") {}
     Person(string n): name(n), left("left arm"), right("right arm") {}
     friend ostream& operator << (ostream &out, const Person &c);
