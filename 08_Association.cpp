@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -85,3 +85,4 @@ int main() {
 
 // In while loop, d doesn't point to anything so the loop ends.
 
+*/
