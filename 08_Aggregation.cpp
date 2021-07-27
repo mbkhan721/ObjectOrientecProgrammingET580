@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -68,10 +68,18 @@ int main() {
 
     Person p1{"Kim"};              // Calls the 1 param constr on line 29. It generates an address object which
     // is just set to homeless.
+
     Person p2{"Kanye", *a1};    // Kanye is associated with this. This is the address object that we created
     // on line 67. By sending the actual object, we dereference a1 to send the actual object by reference. We end
     // up calling 4th constructor on line 37.
+
+    // accessor and mutator functions
     p1.setHome(p2.getHome());      // Kim moves in with Kanye, a1 belongs to multiple people.
+    // p2.getHome() is going to return a reference to the address object associated Kanye. Which means that it
+    // returns a reference to the object "4545 Center Blvd." on line 67.
+    //
+    // Now that we have that object, we then send it to setHome. So setHome accepts the address object a1 by reference
+    // and we are going to store the memory address of that into the *home pointer inside p1.
 
     cout << p1 << "\n";
     cout << p2 << "\n";
@@ -79,3 +87,4 @@ int main() {
     cout << "\n";
     return 0;
 }
+*/
