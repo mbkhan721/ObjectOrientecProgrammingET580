@@ -22,7 +22,7 @@ public:
     int getAge() const {return age;}
     double getWeight() const {return weight;}
 
-    string& setName(string n) const {*name = n;}
+    void setName(string n) const {*name = n;}
     static string getLifespan() {return "unknown lifespan";}
 
     // The big three
@@ -57,15 +57,28 @@ class Dog : public Pet {
 private:
     string *breed;
 public:
-    Dog() {}
+    Dog(): Dog("", 0, 0, "") {}
     Dog(string n, int a, double w, string b): breed (new string(b)), Pet(n, a, w){}
 
-    string getBreed() {return *breed;}
-    string& setBreed(string b) {*breed = b;}
+    string getBreed() const {return *breed;}
+    //string getName() const {return *name;}
+    void setBreed(string b) {*breed = b;}
+    void setName(string n) {*name = n;}
+
+    string getLifespan() {
+        if (weight < 100) {
+            return "Approximately 7 years";
+        }
+        return "Approximately 13 years";
+    }
 
     // Copy constructor
-    Dog(const Dog &c): Pet(c), breed (new string(*(c.breed))) {
+    Dog(const Dog &c): Pet(c), breed(new string(*(c.breed))) {
         cout << "==> (Dog) copy constructor was called\n";
+        name = c.name;
+        age = c.age;
+        weight = c.weight;
+        breed = c.breed;
     }
 
     // assignment operator overload
@@ -79,6 +92,7 @@ public:
     }
 
     ~Dog() {
+        cout << "==> (Dog) Destructor was called\n";
         delete breed;
     }
 };
