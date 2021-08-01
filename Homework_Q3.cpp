@@ -6,9 +6,9 @@ using namespace std;
 //
 // Created by Muhammad B. Khan
 // ET580 Summer2
-// Homework 4 - Question 2
+// Homework 4 - Question 3
 //
-// 2) --------------------------------------------------------------------------
+// 3) --------------------------------------------------------------------------
 class Pet {
 public:
     string *name;
@@ -52,7 +52,7 @@ Pet::~Pet() {
     delete name;
     cout << "==> (Pet) Destructor was called\n";
 }
-
+// --------------------------------------------------------------------------
 
 class Dog : public Pet {
 private:
@@ -97,6 +97,14 @@ public:
         delete breed;
     }
 };
+// --------------------------------------------------------------------------
+
+class Rock : public Pet {
+public:
+    static string getLifespan() {
+        return "Thousands of years";
+    }
+};
 
 
 // *********************************************************************************
@@ -105,29 +113,11 @@ public:
 
 int main() {
 
-    // 2) --------------------------------------------------------------------------
-    cout << "\nMuhammad B. Khan - Homework 4\nET580 - Summer\n\n------------ Problem 2: \n";
+    // 3) --------------------------------------------------------------------------
+    cout << "\nMuhammad B. Khan - Homework 4\nET580 - Summer\n\n------------ Problem 3: \n";
 
-    Dog d("Doggy",2,10,"Boxer");
-    cout<<d.getName()<<endl;
-    cout<<d.getAge()<<endl;
-    cout<<d.getWeight()<<endl;
-    cout<<d.getBreed()<<endl;
-    cout<<d.getLifespan()<<endl;
-    Dog d1 = d,d2;
-    d1.setBreed("Akita");
-    cout<<d1.getName()<<endl;
-    cout<<d1.getAge()<<endl;
-    cout<<d1.getWeight()<<endl;
-    cout<<d1.getBreed()<<endl;
-    cout<<d1.getLifespan()<<endl;
-    d2 = d1;
-    d2.setName("King");
-    cout<<d2.getName()<<endl;
-    cout<<d2.getAge()<<endl;
-    cout<<d2.getWeight()<<endl;
-    cout<<d2.getBreed()<<endl;
-    cout<<d2.getLifespan()<<endl;
+    Rock r;
+    cout<<r.getLifespan()<<endl;
 
 
     cout << endl;
