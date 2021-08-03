@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -66,3 +66,4 @@ int main() {
 }
 // I can create objects from derived classes and point to it from using the pointer of the parent type. But I cannot
 // create an object from type animal.
+*/
