@@ -1,4 +1,4 @@
-/*
+
 // Muhammad B. Khan
 // Exam 3 - Question 5
 // ET580 - Summer 2
@@ -92,24 +92,31 @@ private:
     int size;
     int capacity;
 public:
-    //VehicleList() {capacity = 5; size = 0; vehicles = 0;}
     VehicleList() {capacity = 5; size = 0; vehicles = new Vehicle *[capacity];}
 
     void add(Vehicle *v) {
-        if (size == capacity) {
-            vehicles[size++] = v;
-            v->getBrand();
-
+        if( size >= capacity ) {
+            cout << "The vehicle list is full." << endl;
+            return;
         }
+        vehicles[size] = v;
+        size++;
     }
 
-    void remove(){}
-
-    void output(){
-        for (int i = 0; i < size; ++i) {
-            vehicles[i]->output();
+    void remove(){
+        // remove last element
+        if( size <= 0 ) {
+            cout << "The vehicle list is empty."  << endl;
+            return;
         }
-        cout << "\n";
+        size--;
+        delete vehicles[size];
+        vehicles[size] = nullptr;
+    }
+
+    void output() {
+        for(int i = 0; i < size; i++)
+            vehicles[i]->output();
     }
 
     ~VehicleList() {
@@ -145,4 +152,3 @@ int main() {
     cout << endl;
     return 0;
 }
-*/
