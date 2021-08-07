@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -22,6 +22,7 @@ double divide(double a, double b) {
         cout << "Enter a denominator: ";
         cin >> d;
 
+        // in the try block, we have a function call
         try {                                           // code to try
             answer = divide(n, d);                      // code to test for an exception
             cout << "The answer is: " << answer << "." << "\n";     // code to run if no exception is thrown
@@ -36,3 +37,4 @@ double divide(double a, double b) {
         cout << "\n";
         return 0;
     }
+*/
