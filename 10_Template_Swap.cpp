@@ -16,15 +16,9 @@ using namespace std;
 
 // T is a placeholder for type.
 
-void swapVal(int& a, int& b) {          // Swap for integers
-    int temp;
-    temp = a;
-    a = b;
-    b = temp;
-}
-
-void swapVal(char& a, char& b) {        // Swap for chars
-    char temp;
+template<typename T>                    // T defines a type
+void swapVal(T &a, T &b) {
+    T temp;
     temp = a;
     a = b;
     b = temp;
