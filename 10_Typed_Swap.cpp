@@ -2,42 +2,28 @@
 #include <iostream>
 using namespace std;
 
-class DivByZero {                                           // exception class
-private:
-    const char* message;                                    // error message (const char array)
-public:
-    DivByZero(): DivByZero("") {}
-    DivByZero(const char* msg): message(msg) {}             // store a message in the object
-    const char* getMessage() const {return message;}        // return the stored message
-};
-double divide(double a, double b) {
-    if (b == 0) {
-        throw DivByZero("Cannot divide by zero.");      // end function and throw exception
-    }
-    return a / b;                                            // if no exception, run this
-}
+// The Need For Templates
+//
+// If I have multiple swap functions like strings, ints, and chars, I have to create a swap
+// function for each type where each function will have to overload the other function by
+// accepting different parameters of its own types.
+// In other words, functions must be overloaded to support the same operation upon different types.
+//
+// The way around this is Template Functions.
+// A Template Function is a function that can be applied to many different types.
+// Type is decided by function call.
+// Compiler converts the template function into a typed function before run time.
+
+// T is a placeholder for type.
+
+
 // *********************************************************************************
 // **************************      MAIN FUNCTION     *******************************
 // *********************************************************************************
 
 int main() {
 
-    double n, d, answer;
-    cout << "Enter a numerator: ";
-    cin >> n;
-    cout << "Enter a denominator: ";
-    cin >> d;
 
-    // in the try block, we have a function call
-    try {                                                       // code to try
-        answer = divide(n, d);                                  // code to test for an exception
-        cout << "The answer is: " << answer << "." << "\n";     // code to run if no exception is thrown
-    }
-    catch (const DivByZero &e) {                                // code to run if there is a caught exception
-        cerr << "Error: " << e.getMessage() << "\n";
-    }
-
-    cout << "\nProgram Continues to Run" << "\n";
 
 
     cout << "\n";
