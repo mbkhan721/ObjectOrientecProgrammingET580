@@ -1,6 +1,9 @@
-/*
+
 #include <iostream>
 using namespace std;
+
+// template functions with support for multiple types in the same function
+// this supports multiple types as well as same types for flexibility.
 
 template<typename T>
 T add(T a, T b) {
@@ -26,4 +29,3 @@ int main() {
     cout << "\n";
     return 0;
 }
-*/
