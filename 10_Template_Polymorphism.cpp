@@ -1,4 +1,4 @@
-/*
+
 #include <iostream>
 using namespace std;
 
@@ -58,7 +58,7 @@ int main() {
     Node<char> n2(c);
     Node<double> n3(d);
     Node<string> n4(s);      // storing actual data from n1 to n4
-                                // storing a pointer to data in n5
+    // storing a pointer to data in n5
     Node<Obj*> n5(&o);          // can store an object or an object pointer
 
     cout << n1.getElement() << "\n";
@@ -66,27 +66,12 @@ int main() {
     cout << n3.getElement() << "\n";
     cout << n4.getElement() << "\n";
     cout << n5.getElement()->getName() << "\n";     // -> operator coz node contains a pointer
-
-
     // n5.getElement() returns a pointer to o from line 55.
     // then it says o.getName(), that's what the arrow operator does. It dereferences
     // what getElement() returns and then it calls the getName() and that returns
     // the name "Azeem".
-    //
-    // the idea is that T does not have to be the type of the actual variable, it can be a
-    // pointer.
-    // If we want to use indirect memory, meaning that out objects are not being constantly duplicated,
-    // then we simply store a pointer rather than the object itself. This way the pointers are getting
-    // copied by value, not the data.
-    //
-    // We can use a template class to store the actual data or we can use a template class to store
-    // pointers to actual data. By storing pointers, we are not gonna end up with duplicating objects.
-    //
-    // Initially, in a template class, everything should be pass by value for type T, U, or V.
-    // Only do pass by reference when you need to like the swap function where there's no way around it.
 
 
     cout << "\n";
     return 0;
 }
-*/
