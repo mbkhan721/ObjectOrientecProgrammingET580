@@ -52,7 +52,7 @@ int main() {
     char c = 'A';
     double d = 3.14;
     string s = "Hi";
-    Obj o("Obj");
+    Obj o("Azeem");
 
     Node<int> n1(i);
     Node<char> n2(c);
@@ -66,7 +66,10 @@ int main() {
     cout << n3.getElement() << "\n";
     cout << n4.getElement() << "\n";
     cout << n5.getElement()->getName() << "\n";     // -> operator coz node contains a pointer
-
+    // n5.getElement() returns a pointer to o from line 55.
+    // then it says o.getName(), that's what the arrow operator does. It dereferences
+    // what getElement() returns and then it calls the getName() and that returns
+    // the name "Azeem".
 
 
     cout << "\n";
