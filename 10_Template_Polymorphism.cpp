@@ -2,43 +2,52 @@
 #include <iostream>
 using namespace std;
 
-// a class which is not type specific due to the use of template
-//
-// a class contains data members of other types. So whatever data is gonna be
-// stored inside our objects, that can be templatized. This will involve templatizing
-// the class and all of the functions that exists in the class.
-//
-// a node is an object that's created to store data of other objects or variables.
-// in data structures, we store nodes rather than storing the data directly. and the
-// nodes actually store the data.
+// combining templates with inheritance
+// inheritance where polymorphism actually works
 
-class Obj {                         // an example class
-private:
-    string name;
+template<typename T>
+class ID {                          // base class
+protected:      // derived classes will be able to access it directly coz its protected / private means it wouldn't
+    T idVal;    // data variable of type T
 public:
-    Obj(string n): name(n) {}
-    string getName() const {return name;}
+    ID() = default;
+    ID(T v): idVal(v) {}
+    T getId() const {return idVal;}
+    virtual void output() const {cout << idVal << "\n";}    // virtual needed for polymorphic effect
 };
 
-template<typename T>
-class Node {                        // node objects store obj by value
+template<typename T>                // EmployeeID class is of type T
+class EmployeeID : public ID<T> {   // derived class from ID of type T
 public:
-    Node(T e);
-    T getElement() const;
-    void setElement(T e);
-private:
-    T element;
+    // Two constructors below
+    EmployeeID() = default;         // another way of writing default constructor
+    EmployeeID(T n): ID<T>(n) {}    // constr stores data inside idVal / creates an if of type T object which will be associated with out EmployeeID object
 };
 
-template<typename T>    // This is only for external definitions
-Node<T>::Node(T e): element(e) {}       // constructor
-// it's Node<T> node of type T because we don't know what T is gonna be yet.
+template<typename T, typename U>
+class ManagerID : public ID<T> {    // derived class
+private:
+    U title;                        // introduce a second template type
+public:
+    ManagerID() = default;          // default constr
+    ManagerID(T n, U t): ID<T>(n), title(t) {}  // 2 param constr
+    void output() const override {
+        // cout below needs to know what idVal is so I have to
+        // scope resolve it. In this case, I'm gonna resolve it
+        // to ManagerID saying that it's part of this class, but
+        // I can also resolve it to ID<T>
+        // so im scoping it to ManagerID of type T and type U
+        cout << ManagerID<T, U>::idVal << " " << title << "\n";
+    }
+};
 
-template<typename T>
-T Node<T>::getElement() const { return element; }   // accessor of type T
+template<typename T>                // non-member function
+// Print function accepts objects of type T and accepts it by reference
+// accepting it by reference will enable the polymorphism effect.
+void print(const ID<T> &id) {       // polymorphism by passing ID by reference
+    id.output();
+}
 
-template<typename T>
-void Node<T>::setElement(T e) { element = e; }      // mutator of type T
 
 
 // *********************************************************************************
@@ -48,28 +57,15 @@ void Node<T>::setElement(T e) { element = e; }      // mutator of type T
 int main() {
     cout << "\n";
 
-    int i = 5;
-    char c = 'A';
-    double d = 3.14;
-    string s = "Hi";
-    Obj o("Azeem");
+    ID<int> **ids = new ID<int>*[4];        // array of template ID objects
+    ids[0] = new EmployeeID<int>(721);
+    ids[1] = new EmployeeID<int>(4);
+    ids[2] = new ManagerID<int, string>(123, "CEO");
+    ids[3] = new ManagerID<int, string>(658, "CFO");
 
-    Node<int> n1(i);
-    Node<char> n2(c);
-    Node<double> n3(d);
-    Node<string> n4(s);      // storing actual data from n1 to n4
-    // storing a pointer to data in n5
-    Node<Obj*> n5(&o);          // can store an object or an object pointer
-
-    cout << n1.getElement() << "\n";
-    cout << n2.getElement() << "\n";
-    cout << n3.getElement() << "\n";
-    cout << n4.getElement() << "\n";
-    cout << n5.getElement()->getName() << "\n";     // -> operator coz node contains a pointer
-    // n5.getElement() returns a pointer to o from line 55.
-    // then it says o.getName(), that's what the arrow operator does. It dereferences
-    // what getElement() returns and then it calls the getName() and that returns
-    // the name "Azeem".
+    for (int i = 0; i < 4; ++i) {
+        print(*(ids[i]));
+    }
 
 
     cout << "\n";
