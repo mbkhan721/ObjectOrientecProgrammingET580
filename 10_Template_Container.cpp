@@ -102,7 +102,7 @@ int main() {
         int *nums = new int(i + 1);
         dynamicNums.push_back(nums);
     }
-    print(dynamicNums);
+    printPtrs(dynamicNums);
 
 
 
