@@ -1,7 +1,7 @@
 
 #include <iostream>
 using namespace std;
-#include <assert.h>
+#include <cassert>
 
 // a container is a name for specific type of classes which functions as data structures.
 // a container is an object which stores a collection or data structures of other objects.
