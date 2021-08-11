@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -21,7 +21,7 @@ class EmployeeID : public ID<T> {   // derived class from ID of type T
 public:
     // Two constructors below
     EmployeeID() = default;         // another way of writing default constructor
-    EmployeeID(T n): ID<T>(n) {}    // constr stores data inside idVal / creates an if of type T object which will be associated with out EmployeeID object
+    EmployeeID(T n): ID<T>(n) {}    // constr stores data inside idVal / creates an id of type T object which will be associated with our EmployeeID object
 };
 
 template<typename T, typename U>
@@ -58,16 +58,21 @@ int main() {
     cout << "\n";
 
     ID<int> **ids = new ID<int>*[4];        // array of template ID objects
+    // **ids is the pointer to the array of pointers
+
     ids[0] = new EmployeeID<int>(721);
     ids[1] = new EmployeeID<int>(4);
     ids[2] = new ManagerID<int, string>(123, "CEO");
     ids[3] = new ManagerID<int, string>(658, "CFO");
 
     for (int i = 0; i < 4; ++i) {
-        print(*(ids[i]));
-    }
+        print(*(ids[i]));           // iterate through the array & dereference each element
+    }                               // next, the object is sent to the print()
+                                    // because print() is passed by reference, it will call the
+                                    // output() based upon the object type.
 
 
     cout << "\n";
     return 0;
 }
+*/
